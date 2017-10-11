@@ -26,11 +26,13 @@
   </filter>
   <filter-mapping>
     <filter-name>RequestLoggingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/HTMLs/*</url-pattern>
+    <url-pattern>/JSPs/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
   <filter-mapping>
     <filter-name>AuthenticationFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/HTMLs/*</url-pattern>
+    <url-pattern>/JSPs/*</url-pattern>
   </filter-mapping>
 </web-app>
