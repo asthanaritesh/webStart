@@ -29,7 +29,7 @@ else{
 }
 %>
 <h3>Hi <%=userName %>, Login successful. Your Session ID=<%=sessionID %></h3><br>
-<a href="<%=response.encodeURL("DoSomething.jsp") %>">Checkout Page</a>
+<a href="<%=response.encodeURL("DoSomething.jsp") %>">Do Something</a>
 <form action="<%=response.encodeURL("../LogoutServlet") %>" method="post">
 <input type="submit" value="Logout" >
 </form>
