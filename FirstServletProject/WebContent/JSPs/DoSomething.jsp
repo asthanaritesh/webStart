@@ -23,7 +23,7 @@ for(Cookie cookie : cookies){
 %>
 <h3>Hi <%=userName %>, Do Something.</h3>
 <br>
-<form action="../LogoutServlet" method="post">
+<form action="<%=response.encodeURL("../LogoutServlet") %>" method="post">
 <input type="submit" value="Logout" >
 </form>
 </body>

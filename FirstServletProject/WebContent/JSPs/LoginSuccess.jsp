@@ -24,10 +24,13 @@ for(Cookie cookie : cookies){
 	if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
 }
 }
+else{
+	sessionID = session.getId();
+}
 %>
 <h3>Hi <%=userName %>, Login successful. Your Session ID=<%=sessionID %></h3><br>
-<a href="DoSomething.jsp">Checkout Page</a>
-<form action="../LogoutServlet" method="post">
+<a href="<%=response.encodeURL("DoSomething.jsp") %>">Checkout Page</a>
+<form action="<%=response.encodeURL("../LogoutServlet") %>" method="post">
 <input type="submit" value="Logout" >
 </form>
 
