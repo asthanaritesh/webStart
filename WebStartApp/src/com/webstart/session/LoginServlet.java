@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -29,9 +30,9 @@ public class LoginServlet extends HttpServlet {
     
 	public void init() throws ServletException {
 		//we can create DB connection resource here and set it to Servlet context
-		if(getServletContext().getInitParameter("dbURL").equals("jdbc:mysql://localhost/mysql_db") &&
-				getServletContext().getInitParameter("dbUser").equals("mysql_user") &&
-				getServletContext().getInitParameter("dbUserPwd").equals("mysql_pwd"))
+		if(getServletContext().getInitParameter("DBURL").equals("jdbc:mysql://localhost/mysql_db") &&
+				getServletContext().getInitParameter("DBUSER").equals("mydbuser") &&
+				getServletContext().getInitParameter("DBPWD").equals("mydbpwd"))
 		getServletContext().setAttribute("DB_Success", "True");
 		else throw new ServletException("DB Connection error");
 	}
@@ -50,6 +51,10 @@ public class LoginServlet extends HttpServlet {
 		log("User="+user+"::password="+pwd);
 		
 		if(userID.equals(user) && password.equals(pwd)){
+			//ctx.setAttribute is optional, just to show listener capability.
+			ServletContext ctx = request.getServletContext();
+			ctx.setAttribute("User", user);
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			//setting session to expiry in 30 mins
@@ -58,14 +63,12 @@ public class LoginServlet extends HttpServlet {
 			userName.setMaxAge(30*60);
 			response.addCookie(userName);
 			String encodedURL = response.encodeRedirectURL("JSPs/LoginSuccess.jsp");
-			response.sendRedirect(encodedURL);
-			
+			response.sendRedirect(encodedURL);			
 		}else{
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/HTMLs/login.html");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/HTMLs/loginWelcome.html");
 			PrintWriter out= response.getWriter();
-			out.println("<font color=red>Either user name or password is wrong.</font>");
-			rd.include(request, response);
-			
+			out.println("<font color=red>Either user name or password is wrong. Try Again.</font>");
+			rd.include(request, response);			
 		}
 		
 	}
