@@ -1,4 +1,4 @@
-package com.webstart.db;
+package com.webstart.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
