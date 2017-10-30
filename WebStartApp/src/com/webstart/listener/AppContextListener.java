@@ -2,12 +2,11 @@ package com.webstart.listener;
 
 import java.io.File;
 import java.sql.SQLException;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import com.webstart.db.DBConnectionManager;
+import com.webstart.util.DBConnectionManager;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
