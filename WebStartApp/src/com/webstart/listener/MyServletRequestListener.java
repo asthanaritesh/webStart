@@ -5,17 +5,19 @@ import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.annotation.WebListener;
 
+import org.apache.log4j.Logger;
+
 @WebListener
 public class MyServletRequestListener implements ServletRequestListener {
-
+	private final Logger logger = Logger.getLogger(MyServletRequestListener.class);
     public void requestDestroyed(ServletRequestEvent servletRequestEvent) {
     	ServletRequest servletRequest = servletRequestEvent.getServletRequest();
-    	System.out.println("ServletRequest destroyed. Remote IP="+servletRequest.getRemoteAddr());
+    	logger.info("ServletRequest destroyed. Remote IP="+servletRequest.getRemoteAddr());
     }
 
     public void requestInitialized(ServletRequestEvent servletRequestEvent) {
     	ServletRequest servletRequest = servletRequestEvent.getServletRequest();
-    	System.out.println("ServletRequest initialized. Remote IP="+servletRequest.getRemoteAddr());
+    	logger.info("ServletRequest initialized. Remote IP="+servletRequest.getRemoteAddr());
     }
 	
 }

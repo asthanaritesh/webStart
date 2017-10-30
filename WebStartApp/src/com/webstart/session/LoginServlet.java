@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  * Servlet Tutorial - Servlet Example
@@ -21,23 +22,13 @@ import javax.servlet.http.HttpSession;
 		description = "Login Servlet", 
 		urlPatterns = { "/LoginServlet" }, 
 		initParams = { 
-				@WebInitParam(name = "user", value = "Ritesh", description = "Email from webmaster"), 
-				@WebInitParam(name = "password", value = "mypass")
+				@WebInitParam(name = "user", value = "default", description = "Email from webmaster"), 
+				@WebInitParam(name = "password", value = "default")
 		})
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private final Logger logger = Logger.getLogger(LoginServlet.class);
     
-	public void init() throws ServletException {
-		//we can create DB connection resource here and set it to Servlet context
-		if(getServletContext().getInitParameter("DBURL").equals("jdbc:mysql://localhost/mysql_db") &&
-				getServletContext().getInitParameter("DBUSER").equals("mydbuser") &&
-				getServletContext().getInitParameter("DBPWD").equals("mydbpwd"))
-		getServletContext().setAttribute("DB_Success", "True");
-		else throw new ServletException("DB Connection error");
-	}
-
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		//get request parameters for userID and password
@@ -49,6 +40,7 @@ public class LoginServlet extends HttpServlet {
 		String password = getServletConfig().getInitParameter("password");
 		//logging example
 		log("User="+user+"::password="+pwd);
+		logger.info("User="+user+"::password="+pwd);
 		
 		if(userID.equals(user) && password.equals(pwd)){
 			//ctx.setAttribute is optional, just to show listener capability.

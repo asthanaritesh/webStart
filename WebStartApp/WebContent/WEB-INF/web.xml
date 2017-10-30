@@ -8,15 +8,15 @@
   
   <context-param>
     <param-name>DBURL</param-name>
-    <param-value>jdbc:mysql://localhost/mysql_db</param-value>
+    <param-value>jdbc:oracle:thin:@//j1013945w7lt:2521/WEBDB201</param-value>
   </context-param>
   <context-param>
     <param-name>DBUSER</param-name>
-    <param-value>mydbuser</param-value>
+    <param-value>webapp</param-value>
   </context-param>
   <context-param>
     <param-name>DBPWD</param-name>
-    <param-value>mydbpwd</param-value>
+    <param-value>manager</param-value>
   </context-param>
   
   <listener>
@@ -65,5 +65,10 @@
     <exception-type>javax.servlet.ServletException</exception-type>
     <location>/AppExceptionHandler</location>
   </error-page>
+  
+  <context-param>
+    <param-name>log4j-config</param-name>
+    <param-value>WEB-INF/log4j.xml</param-value>
+  </context-param>
   
 </web-app>

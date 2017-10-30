@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import com.webstart.listener.MySessionListener;
+
 /**
  * Servlet implementation class LogoutServlet
  */
@@ -19,6 +23,7 @@ import javax.servlet.http.HttpSession;
 		   )
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final Logger logger = Logger.getLogger(LogoutServlet.class);
        
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	response.setContentType("text/html");
@@ -26,7 +31,7 @@ public class LogoutServlet extends HttpServlet {
     	if(cookies != null){
     	for(Cookie cookie : cookies){
     		if(cookie.getName().equals("JSESSIONID")){
-    			System.out.println("JSESSIONID="+cookie.getValue());
+    			logger.info("Logging Out JSESSIONID="+cookie.getValue());
     		}
     		cookie.setMaxAge(0);
     		response.addCookie(cookie);
@@ -34,7 +39,7 @@ public class LogoutServlet extends HttpServlet {
     	}
     	//invalidate the session if exists
     	HttpSession session = request.getSession(false);
-    	System.out.println("User="+session.getAttribute("user"));
+    	logger.info("User="+session.getAttribute("user"));
     	if(session != null){
     		session.invalidate();
     	}
