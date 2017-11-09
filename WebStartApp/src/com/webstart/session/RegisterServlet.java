@@ -43,37 +43,36 @@ public class RegisterServlet extends HttpServlet {
 			PrintWriter out= response.getWriter();
 			out.println("<font color=red>"+errorMsg+"</font>");
 			rd.include(request, response);
-		}else{
-		
-		Connection con = (Connection) getServletContext().getAttribute("DBConnection");
-		PreparedStatement ps = null;
-		try {
-			ps = con.prepareStatement("insert into Users(name,email,country, password) values (?,?,?,?)");
-			ps.setString(1, name);
-			ps.setString(2, email);
-			ps.setString(3, country);
-			ps.setString(4, password);
-			
-			ps.execute();
-			
-			logger.info("User registered with email="+email);
-			
-			//forward to login page to login
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/HTMLs/loginAgain.html");
-			PrintWriter out= response.getWriter();
-			out.println("<font color=green>Registration successful, please login below.</font>");
-			rd.include(request, response);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error("Database connection problem");
-			throw new ServletException("DB Connection problem.");
-		}finally{
-			try {
-				ps.close();
-			} catch (SQLException e) {
-				logger.error("SQLException in closing PreparedStatement");
 			}
-		}
+		else{		
+			Connection con = (Connection) getServletContext().getAttribute("DBConnection");
+			PreparedStatement ps = null;
+			try {
+				ps = con.prepareStatement("insert into Users(name,email,country, password) values (?,?,?,?)");
+				ps.setString(1, name);
+				ps.setString(2, email);
+				ps.setString(3, country);
+				ps.setString(4, password);				
+				ps.execute();
+				
+				logger.info("User registered with email="+email);
+				
+				//forward to login page to login
+				RequestDispatcher rd = getServletContext().getRequestDispatcher("/HTMLs/loginAgain.html");
+				PrintWriter out= response.getWriter();
+				out.println("<font color=green>Registration successful, please login below.</font>");
+				rd.include(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				logger.error("Database connection problem");
+				throw new ServletException("DB Connection problem.");
+			}finally{
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					logger.error("SQLException in closing PreparedStatement");
+				}
+			}
 		}		
 	}
 }

@@ -12,7 +12,40 @@ Created Users in Db:
 <1> admin : manager
 <2> webapp : manager
 ############################################################################
+mysql installation and setup
+<1>Download mysql zip from https://dev.mysql.com/downloads/
+<2> unzip at C:\mysql. create a data folder inside it (C:\mysql\data)
+<3> Inside C:\mysql, create my.ini with following contents : 
+[mysqld]
+basedir="C:/mysql/"
+datadir="C:/mysql/data/"
+<4> Start the daemon(server): First Initialize it, Go to bin dir and type
+>mysqld --defaults-file=C:\mysql\my.ini --initialize-insecure
+then run
+>mysqld --console
+<5> Now another command window start mysql client
+>mysql -u root
+Then at mysql prompt set the root's password
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY password;
+<6> Now onwards, you need to run mysql like:
+>mysql -u root -p
+<7> In case of any issues, Just delete the contents of data directory and restart with step <4>
+================================================================================
+Create User:
+>CREATE USER 'webapp'@'localhost' IDENTIFIED BY 'manager';
+>GRANT ALL PRIVILEGES ON * . * TO 'webapp'@'localhost';
+Create Database:
+>CREATE DATABASE webapp;
+To show current databse selected
+>SELECT DATABASE();
+To use a different databse:
+>Use webapp;
+To directly login and select database:
+>mysql -h localhost -u webapp -p webapp
+######################################################################################
 <1> Put log4j.jar into tomcat lib folder only (E:\Apache\tomcat-7.0.34\lib).
-<2> Put ojdbc8.jar in libs folder inside your project. Right click on eclipse Project + Run Configuraions + Classpath + Select user Entries + Add Jars + Select the ojdbc8.jar + Apply +Ok.
+<2> Put ojdbc8.jar/mysql-connector-java-5.1.44-bin.jar in libs folder inside your project. Right click on eclipse Project + Run Configuraions + Classpath + Select user Entries + Add Jars + Select the ojdbc8.jar + Apply +Ok.
 (You can also put in Apache lib in case you deploy war outside eclipse, just like log4j.jar)
 ################################################################################
+
+

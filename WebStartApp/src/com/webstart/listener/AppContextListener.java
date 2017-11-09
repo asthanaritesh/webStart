@@ -44,10 +44,11 @@ public class AppContextListener implements ServletContextListener {
 		try {
 			dbManager = new DBConnectionManager(url, u, p);
 			ctx.setAttribute("DBConnection", dbManager.getConnection());
+			logger.info("Database connection initialized successfully.");
 		} catch (ClassNotFoundException | SQLException e) {
+			logger.error("Database connection Failed.",e);
 			e.printStackTrace();
-		}		
-    	logger.info("Database connection initialized successfully.");
+		}    	
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {

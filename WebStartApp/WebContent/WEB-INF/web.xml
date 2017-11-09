@@ -8,7 +8,8 @@
   
   <context-param>
     <param-name>DBURL</param-name>
-    <param-value>jdbc:oracle:thin:@//j1013945w7lt:2521/WEBDB201</param-value>
+    <!--param-value>jdbc:oracle:thin:@//j1013945w7lt:2521/WEBDB201</param-value-->
+  <param-value>jdbc:mysql://localhost:3306/WebAppDB</param-value>
   </context-param>
   <context-param>
     <param-name>DBUSER</param-name>

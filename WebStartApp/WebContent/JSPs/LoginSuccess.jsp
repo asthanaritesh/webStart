@@ -12,7 +12,7 @@
 <%
 //allow access only if session exists
 String user = null;
-if(session.getAttribute("user") == null){
+if(session.getAttribute("User") == null){
 	response.sendRedirect("../HTMLs/loginWelcome.html");
 }else user = (String) session.getAttribute("user");
 String userName = null;

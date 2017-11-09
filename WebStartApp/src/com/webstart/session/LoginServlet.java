@@ -2,18 +2,21 @@ package com.webstart.session;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import com.webstart.util.User;
 
 /**
  * Servlet Tutorial - Servlet Example
@@ -28,40 +31,68 @@ import org.apache.log4j.Logger;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final Logger logger = Logger.getLogger(LoginServlet.class);
-    
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//get request parameters for userID and password
-		String user = request.getParameter("user");
-		String pwd = request.getParameter("pwd");
-		
-		//get servlet config init params
-		String userID = getServletConfig().getInitParameter("user");
-		String password = getServletConfig().getInitParameter("password");
-		//logging example
-		log("User="+user+"::password="+pwd);
-		logger.info("User="+user+"::password="+pwd);
-		
-		if(userID.equals(user) && password.equals(pwd)){
-			//ctx.setAttribute is optional, just to show listener capability.
-			ServletContext ctx = request.getServletContext();
-			ctx.setAttribute("User", user);
-			
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-			//setting session to expiry in 30 mins
-			session.setMaxInactiveInterval(30*60);
-			Cookie userName = new Cookie("user", user);
-			userName.setMaxAge(30*60);
-			response.addCookie(userName);
-			String encodedURL = response.encodeRedirectURL("JSPs/LoginSuccess.jsp");
-			response.sendRedirect(encodedURL);			
-		}else{
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/HTMLs/loginWelcome.html");
-			PrintWriter out= response.getWriter();
-			out.println("<font color=red>Either user name or password is wrong. Try Again.</font>");
-			rd.include(request, response);			
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String email = request.getParameter("user");
+		String password = request.getParameter("password");
+		String errorMsg = null;
+		if (email == null || email.equals("")) {
+			errorMsg = "User Email can't be null or empty";
 		}
-		
+		else if (password == null || password.equals("")) {
+			errorMsg = "Password can't be null or empty";
+		}
+
+		if (errorMsg != null) {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/HTMLs/loginAgain.html");
+			PrintWriter out = response.getWriter();
+			out.println("<font color=red>" + errorMsg + "</font>");
+			rd.include(request, response);
+		} else {
+
+			Connection con = (Connection) getServletContext().getAttribute("DBConnection");
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			try {
+				ps = con.prepareStatement(
+						"select id, name, email,country from Users where email=? and password=? limit 1");
+				ps.setString(1, email);
+				ps.setString(2, password);
+				rs = ps.executeQuery();
+
+				if (rs != null && rs.next()) {
+					Cookie loginCookie = new Cookie("user",rs.getString("name"));
+					//setting cookie to expiry in 30 mins
+					loginCookie.setMaxAge(30*60);
+					response.addCookie(loginCookie);
+
+					User user = new User(rs.getString("name"), rs.getString("email"), rs.getString("country"), rs.getInt("id"));
+					logger.info("User found with details=" + user);
+					HttpSession session = request.getSession();
+					session.setAttribute("User", user);
+					response.sendRedirect(request.getContextPath()+"/JSPs/LoginSuccess.jsp");
+					;
+				} else {
+					RequestDispatcher rd = getServletContext().getRequestDispatcher(request.getContextPath()+"/HTMLs/loginAgain.html");
+					PrintWriter out = response.getWriter();
+					logger.error("User not found with email=" + email);
+					out.println("<font color=red>No user found with given email id, please register first.</font>");
+					rd.include(request, response);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				logger.error("Database connection problem");
+				throw new ServletException("DB Connection problem.");
+			} finally {
+				try {
+					rs.close();
+					ps.close();
+				} catch (SQLException e) {
+					logger.error("SQLException in closing PreparedStatement or ResultSet");
+				}
+			}
+		}
 	}
 }
