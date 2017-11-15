@@ -2,14 +2,15 @@ package com.webstart.util;
 
 import java.io.Serializable;
 
-public class User implements Serializable{	
-	private static final long serialVersionUID = 6297385302078200511L;	
+public class UserBean implements Serializable{	
 	private int id;
 	private String name;
 	private String email;
 	private String country;
 	
-	public User(String name, String email, String country, int id){
+	public UserBean() {}
+	
+	public UserBean(String name, String email, String country, int id){
 		this.id=id;
 		this.name=name;
 		this.email=email;

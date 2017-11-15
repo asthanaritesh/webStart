@@ -27,25 +27,32 @@ then run
 >mysql -u root
 Then at mysql prompt set the root's password
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY password;
-<6> Now onwards, you need to run mysql like:
+<6> To coonect as mysql client:
 >mysql -u root -p
+or as webapp user:
+>mysql -u webapp -p
 <7> In case of any issues, Just delete the contents of data directory and restart with step <4>
 ================================================================================
 Create User:
 >CREATE USER 'webapp'@'localhost' IDENTIFIED BY 'manager';
 >GRANT ALL PRIVILEGES ON * . * TO 'webapp'@'localhost';
 Create Database:
->CREATE DATABASE webapp;
+>CREATE DATABASE webappdb;
 To show current databse selected
 >SELECT DATABASE();
 To use a different databse:
->Use webapp;
+>Use webappdb;
 To directly login and select database:
->mysql -h localhost -u webapp -p webapp
+>mysql -h localhost -u webapp -p webappdb
 ######################################################################################
 <1> Put log4j.jar into tomcat lib folder only (E:\Apache\tomcat-7.0.34\lib).
 <2> Put ojdbc8.jar/mysql-connector-java-5.1.44-bin.jar in libs folder inside your project. Right click on eclipse Project + Run Configuraions + Classpath + Select user Entries + Add Jars + Select the ojdbc8.jar + Apply +Ok.
 (You can also put in Apache lib in case you deploy war outside eclipse, just like log4j.jar)
+################################################################################
+Start mysql DB (Go to C:\mysql\bin)
+>>mysqld --console
+To access the web page type:
+http://localhost/WebStartApp
 ################################################################################
 
 

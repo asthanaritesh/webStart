@@ -11,7 +11,7 @@
 <body>
 <h3>Hi, Logout successful.</h3><br>
 
-<a href="../HTMLs/loginAgain.html">Login Page</a>
+<a href="../HTMLs/Welcome.html">Login Page</a>
 </body>
 
 </html>

@@ -16,7 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.webstart.util.User;
+import com.webstart.util.UserBean;
 
 /**
  * Servlet Tutorial - Servlet Example
@@ -39,14 +39,14 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String errorMsg = null;
 		if (email == null || email.equals("")) {
-			errorMsg = "User Email can't be null or empty";
+			errorMsg = "UserBean Email can't be null or empty";
 		}
 		else if (password == null || password.equals("")) {
 			errorMsg = "Password can't be null or empty";
 		}
 
 		if (errorMsg != null) {
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/HTMLs/loginAgain.html");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/HTMLs/Login.html");
 			PrintWriter out = response.getWriter();
 			out.println("<font color=red>" + errorMsg + "</font>");
 			rd.include(request, response);
@@ -68,14 +68,14 @@ public class LoginServlet extends HttpServlet {
 					loginCookie.setMaxAge(30*60);
 					response.addCookie(loginCookie);
 
-					User user = new User(rs.getString("name"), rs.getString("email"), rs.getString("country"), rs.getInt("id"));
+					UserBean user = new UserBean(rs.getString("name"), rs.getString("email"), rs.getString("country"), rs.getInt("id"));
 					logger.info("User found with details=" + user);
 					HttpSession session = request.getSession();
 					session.setAttribute("User", user);
 					response.sendRedirect(request.getContextPath()+"/JSPs/LoginSuccess.jsp");
 					;
 				} else {
-					RequestDispatcher rd = getServletContext().getRequestDispatcher(request.getContextPath()+"/HTMLs/loginAgain.html");
+					RequestDispatcher rd = getServletContext().getRequestDispatcher("/HTMLs/Login.html");
 					PrintWriter out = response.getWriter();
 					logger.error("User not found with email=" + email);
 					out.println("<font color=red>No user found with given email id, please register first.</font>");

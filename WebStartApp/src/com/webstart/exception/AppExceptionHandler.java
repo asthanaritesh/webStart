@@ -52,7 +52,7 @@ public class AppExceptionHandler extends HttpServlet {
 	    	  out.write("</ul>");
 	      }	      
 	      out.write("<br><br>");
-	      out.write("<a href=\"HTMLs/loginAgain.html\">Home Page</a>");
+	      out.write("<a href=\"HTMLs/Login.html\">Home Page</a>");
 	      out.write("</body></html>");
 	}
 }

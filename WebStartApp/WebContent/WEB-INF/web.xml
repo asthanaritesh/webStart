@@ -3,7 +3,7 @@
   <display-name>LoginExample</display-name>
   
   <welcome-file-list>
-    <welcome-file>HTMLs/loginWelcome.html</welcome-file>
+    <welcome-file>HTMLs/Welcome.html</welcome-file>
   </welcome-file-list>
   
   <context-param>

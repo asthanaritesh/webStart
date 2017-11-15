@@ -13,7 +13,7 @@
 //allow access only if session exists
 String user = null;
 if(session.getAttribute("User") == null){
-	response.sendRedirect("../HTMLs/loginWelcome.html");
+	response.sendRedirect("../HTMLs/Welcome.html");
 }else user = (String) session.getAttribute("user");
 String userName = null;
 String sessionID = null;
@@ -29,7 +29,7 @@ else{
 }
 %>
 <h3>Hi <%=userName %>, Login successful.</h3><br>
-<a href="<%=response.encodeURL("DoSomething.jsp") %>">Do Something</a>
+<a href="<%=response.encodeURL("MyAccountInfo.jsp") %>">My Account Info</a><br>
 <form action="<%=response.encodeURL("../LogoutServlet") %>" method="post">
 <input type="submit" value="Logout" >
 </form>
