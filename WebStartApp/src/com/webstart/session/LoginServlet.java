@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
+
+import com.webstart.dao.UserBean;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.webstart.util.UserBean;
 
 /**
  * Servlet Tutorial - Servlet Example
@@ -57,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 			ResultSet rs = null;
 			try {
 				ps = con.prepareStatement(
-						"select id, name, email,country from Users where email=? and password=? limit 1");
+						"select id,name,email,age,role,country from Users where email=? and password=? limit 1");
 				ps.setString(1, email);
 				ps.setString(2, password);
 				rs = ps.executeQuery();
@@ -68,7 +70,7 @@ public class LoginServlet extends HttpServlet {
 					loginCookie.setMaxAge(30*60);
 					response.addCookie(loginCookie);
 
-					UserBean user = new UserBean(rs.getString("name"), rs.getString("email"), rs.getString("country"), rs.getInt("id"));
+					UserBean user = new UserBean(rs.getString("name"), rs.getString("email"), rs.getString("role"), rs.getInt("age"), rs.getString("country"), rs.getInt("id"));
 					logger.info("User found with details=" + user);
 					HttpSession session = request.getSession();
 					session.setAttribute("User", user);

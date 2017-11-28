@@ -48,6 +48,7 @@ To directly login and select database:
 <1> Put log4j.jar into tomcat lib folder only (E:\Apache\tomcat-7.0.34\lib).
 <2> Put ojdbc8.jar/mysql-connector-java-5.1.44-bin.jar in libs folder inside your project. Right click on eclipse Project + Run Configuraions + Classpath + Select user Entries + Add Jars + Select the ojdbc8.jar + Apply +Ok.
 (You can also put in Apache lib in case you deploy war outside eclipse, just like log4j.jar)
+<3> Put hibernate-core-4.3.9.jar in libs folder and and add this as external jar in buildpath of project.
 ################################################################################
 Start mysql DB (Go to C:\mysql\bin)
 >>mysqld --console
