@@ -28,7 +28,12 @@ else{
 	sessionID = session.getId();
 }
 %>
-<h3>Hi <%=userName %>, Login successful.</h3><br>
+<h3>Hi <%=userName %>, Login successful. Select the Links below:</h3><br>
+<!-- >a href="${pageContext.request.contextPath}/HTMLs/Graph1.html">Graph..</a><br><br>
+<form action="<%=response.encodeURL("../GraphServlet") %>" method="post">
+<input type="submit" value="GraphServlet" >
+</form-->
+<a href="<%=response.encodeURL("Graph.jsp") %>">GraphJSP</a><br><br><br>
 <a href="<%=response.encodeURL("MyAccountInfo.jsp") %>">My Account Info</a><br>
 <form action="<%=response.encodeURL("../LogoutServlet") %>" method="post">
 <input type="submit" value="Logout" >

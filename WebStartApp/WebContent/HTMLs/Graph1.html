@@ -1,0 +1,39 @@
+<html>
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script src="../JS/springy.js"></script>
+<script src="../JS/springyui.js"></script>
+<SCRIPT>
+function getScreenDimension() {
+	var jGraph = new Packages.com.webstart.algo.Graph();
+   alert("Screen Dimension\r\n  width:");
+   }
+</SCRIPT>
+<FORM>
+<INPUT type="button" value="call JAVA"
+   onClick = "getScreenDimension()">
+</FORM>
+<script>
+var graph = new Springy.Graph();
+var michael = graph.newNode({label: 'Michael'});
+var jessica = graph.newNode({label: 'Jessica'});
+var timothy = graph.newNode({label: 'Timothy'});
+
+graph.newEdge(michael, jessica, {color: '#CC333F', weight: '1'});
+//graph.newEdge(michael, jessica, {weight: '10'});
+graph.newEdge(michael, timothy, {color: '#EDC951'});
+
+jQuery(function(){
+  var springy = window.springy = jQuery('#springydemo').springy({
+    graph: graph,
+    nodeSelected: function(node){      
+    }
+  });
+});
+console.log(michael.label);
+</script>
+
+<canvas id="springydemo" width="640" height="480" />
+
+</body>
+</html>

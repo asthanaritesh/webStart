@@ -74,7 +74,7 @@ public class LoginServlet extends HttpServlet {
 					logger.info("User found with details=" + user);
 					HttpSession session = request.getSession();
 					session.setAttribute("User", user);
-					response.sendRedirect(request.getContextPath()+"/JSPs/LoginSuccess.jsp");
+					response.sendRedirect(request.getContextPath()+"/JSPs/Home.jsp");
 					;
 				} else {
 					RequestDispatcher rd = getServletContext().getRequestDispatcher("/HTMLs/Login.html");

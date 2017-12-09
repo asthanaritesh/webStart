@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>LoginExample</display-name>
-  
   <welcome-file-list>
     <welcome-file>HTMLs/Welcome.html</welcome-file>
   </welcome-file-list>
-  
   <context-param>
     <param-name>DBURL</param-name>
-    <!--param-value>jdbc:oracle:thin:@//j1013945w7lt:2521/WEBDB201</param-value-->
-  <param-value>jdbc:mysql://localhost:3306/WebAppDB</param-value>
+    <param-value>jdbc:mysql://localhost:3306/WebAppDB</param-value>
   </context-param>
   <context-param>
     <param-name>DBUSER</param-name>
@@ -19,7 +16,6 @@
     <param-name>DBPWD</param-name>
     <param-value>manager</param-value>
   </context-param>
-  
   <listener>
     <listener-class>com.webstart.listener.AppContextListener</listener-class>
   </listener>
@@ -32,7 +28,6 @@
   <listener>
     <listener-class>com.webstart.listener.MyServletRequestListener</listener-class>
   </listener>
-  
   <filter>
     <filter-name>RequestLoggingFilter</filter-name>
     <filter-class>com.webstart.session.RequestLoggingFilter</filter-class>
@@ -41,7 +36,6 @@
     <filter-name>AuthenticationFilter</filter-name>
     <filter-class>com.webstart.session.AuthenticationFilter</filter-class>
   </filter>
-  
   <filter-mapping>
     <filter-name>RequestLoggingFilter</filter-name>
     <url-pattern>/HTMLs/*</url-pattern>
@@ -53,23 +47,20 @@
     <url-pattern>/HTMLs/*</url-pattern>
     <url-pattern>/JSPs/*</url-pattern>
   </filter-mapping>
-  
   <error-page>
-  	<error-code>404</error-code>
-  	<location>/AppExceptionHandler</location>
+    <error-code>404</error-code>
+    <location>/AppExceptionHandler</location>
   </error-page>
-    <error-page>
-  	<error-code>500</error-code>
-  	<location>/AppExceptionHandler</location>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/AppExceptionHandler</location>
   </error-page>
   <error-page>
     <exception-type>javax.servlet.ServletException</exception-type>
     <location>/AppExceptionHandler</location>
   </error-page>
-  
   <context-param>
     <param-name>log4j-config</param-name>
     <param-value>WEB-INF/log4j.xml</param-value>
   </context-param>
-  
 </web-app>
